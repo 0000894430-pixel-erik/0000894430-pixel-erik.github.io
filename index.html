@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfólio de [ADICIONE SEU NOME AQUI]</title>
+    
+    <!-- 
+      ==========================================================================
+      ESTILOS CSS (CSS3 Puro e Flexbox)
+      ==========================================================================
+      O CSS define a aparência visual da página (cores, tamanhos, espaçamentos).
+      Utilizamos a abordagem Mobile First: estilizamos primeiro para celular 
+      e depois adaptamos para telas maiores.
+    -->
+    <style>
+        /*
+          VARIÁVEIS CSS (Custom Properties):
+          Permitem armazenar cores e valores reutilizáveis. 
+          Facilitam a criação do Tema Escuro (Dark Mode)!
+        */
+        :root {
+            --bg-primary: #f8fafc;        /* Cor de fundo principal (clara) */
+            --bg-card: #ffffff;           /* Cor dos cartões */
+            --text-color: #1e293b;        /* Cor dos textos (escuro para contraste) */
+            --text-muted: #64748b;       /* Cor de textos secundários */
+            --primary-color: #2563eb;     /* Cor principal de destaque (Azul) */
+            --primary-hover: #1d4ed8;     /* Cor ao passar o mouse em botões */
+            --border-color: #e2e8f0;      /* Cor das bordas */
+            --shadow-color: rgba(0, 0, 0, 0.08); /* Sombra suave */
+            --transition-speed: 0.3s;     /* Velocidade global das animações */
+        }
+
+        /*
+          TEMA ESCURO (Dark Mode):
+          Quando a tag <body> recebe a classe ".dark-mode", sobrescrevemos 
+          as variáveis com cores escuras!
+        */
+        body.dark-mode {
+            --bg-primary: #0f172a;
+            --bg-card: #1e293b;
+            --text-color: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-color: #334155;
+            --shadow-color: rgba(0, 0, 0, 0.4);
+        }
+
+        /* 
+          RESET GLOBAL:
+          Por padrão, navegadores adicionam margens indesejadas. 
+          box-sizing: border-box faz com que paddings não alterem a largura total do elemento.
+        */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth; /* Permite a rolagem suave ao clicar nos links do menu */
+        }
+
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-color);
+            transition: background-color var(--transition-speed), color var(--transition-speed);
+            line-height: 1.6;
+        }
+
+        /* NAVEGAÇÃO E CABEÇALHO */
+        header {
+            position: sticky;
+            top: 0;
+            background-color: var(--bg-card);
+            border-bottom: 1px solid var(--border-color);
+            z-index: 1000;
+            padding: 1rem 1.5rem;
+            box-shadow: 0 2px 8px var(--shadow-color);
+        }
+
+        nav {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .logo {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 1.2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color var(--transition-speed);
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        /* Botão para alternar tema (Dark Mode) */
+        .theme-toggle-btn {
+            background: transparent;
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all var(--transition-speed);
+        }
+
+        .theme-toggle-btn:hover {
+            background-color: var(--primary-color);
+            color: #ffffff;
+        }
+
+        /* LAYOUT GERAL DAS SEÇÕES */
+        section {
+            padding: 4rem 1.5rem;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 2.5rem;
+            color: var(--primary-color);
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background-color: var(--primary-color);
+            margin: 0.5rem auto 0;
+            border-radius: 2px;
+        }
+
+        /* SEÇÃO HERO (Apresentação Principal) */
+        .hero {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding-top: 5rem;
+            gap: 1.5rem;
+        }
+
+        .profile-img {
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid var(--primary-color);
+            box-shadow: 0 4px 15px var(--shadow-color);
+        }
+
+        .hero-text h1 {
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .hero-text p {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            max-width: 600px;
+        }
+
+        .btn-primary {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.8rem 1.8rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 1rem;
+            border: none;
+            cursor: pointer;
+            transition: background-color var(--transition-speed);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-hover);
+        }
+
+        /* SEÇÃO HABILIDADES (Grid em Flexbox) */
+        .skills-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1.5rem;
+        }
+
+        .skill-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            width: 100%;
+            max-width: 180px;
+            text-align: center;
+            box-shadow: 0 4px 10px var(--shadow-color);
+            transition: transform var(--transition-speed);
+        }
+
+        .skill-card:hover {
+            transform: translateY(-5px); /* Efeito de elevação ao passar o mouse */
+        }
+
+        .skill-icon {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .skill-name {
+            font-weight: 600;
+        }
+
+        /* SEÇÃO PROJETOS */
+        .projects-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            justify-content: center;
+        }
+
+        .project-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            overflow: hidden;
+            width: 100%;
+            max-width: 330px;
+            box-shadow: 0 4px 12px var(--shadow-color);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .project-img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            background-color: #cbd5e1;
+        }
+
+        .project-body {
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+            gap: 0.8rem;
+        }
+
+        .project-title {
+            font-size: 1.3rem;
+        }
+
+        .project-desc {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            flex-grow: 1;
+        }
+
+        /* SEÇÃO CONTATO (Formulário) */
+        .contact-form {
+            background-color: var(--bg-card);
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            max-width: 600px;
+            margin: 0 auto;
+            box-shadow: 0 4px 12px var(--shadow-color);
+        }
+
+        .form-group {
+            margin-bottom: 1.2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+
+        .form-group label {
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            background-color: var(--bg-primary);
+            color: var(--text-color);
+            font-size: 1rem;
+            outline: none;
+            transition: border-color var(--transition-speed);
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            border-color: var(--primary-color);
+        }
+
+        /* Feedback do JS após envio */
+        .form-feedback {
+            margin-top: 1rem;
+            padding: 0.8rem;
+            border-radius: 6px;
+            display: none;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .form-feedback.success {
+            background-color: #dcfce7;
+            color: #15803d;
+            border: 1px solid #86efac;
+        }
+
+        /* RODAPÉ */
+        footer {
+            text-align: center;
+            padding: 2rem 1rem;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* RESPONSIVIDADE (Ajustes para telas maiores) */
+        @media (min-width: 768px) {
+            .hero {
+                flex-direction: row;
+                text-align: left;
+                justify-content: center;
+            }
+
+            .hero-text {
+                max-width: 500px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- CABEÇALHO DA PÁGINA (Header) -->
+    <header>
+        <nav>
+            <a href="#" class="logo">[ADICIONE SEU NOME AQUI]</a>
+            
+            <ul class="nav-links">
+                <li><a href="#sobre">Sobre</a></li>
+                <li><a href="#habilidades">Habilidades</a></li>
+                <li><a href="#projetos">Projetos</a></li>
+                <li><a href="#contato">Contato</a></li>
+            </ul>
+
+            <!-- Botão de alternar Dark Mode controlado via JS -->
+            <button id="theme-toggle" class="theme-toggle-btn">Modo Escuro</button>
+        </nav>
+    </header>
+
+    <main>
+        <!-- SEÇÃO HERO / SOBRE MIM -->
+        <section id="sobre" class="hero">
+            <!-- DICA: Altere o atributo 'src' com a URL da sua foto -->
+            <img src="https://placehold.co/160x160/2563eb/ffffff?text=FOTO" alt="Foto de perfil de [ADICIONE SEU NOME AQUI]" class="profile-img" onerror="this.src='https://placehold.co/160x160/2563eb/ffffff?text=FOTO'">
+            
+            <div class="hero-text">
+                <h1>Olá, eu sou o [ADICIONE SEU NOME AQUI]</h1>
+                <p>[DESCREVA UM POUCO SOBRE VOCÊ AQUI - Exemplo: Desenvolvedor Web em formação pelo curso X, apaixonado por tecnologia e criação de sistemas web modernos.]</p>
+                <a href="#contato" class="btn-primary">Entre em Contato</a>
+            </div>
+        </section>
+
+        <!-- SEÇÃO MINHAS HABILIDADES -->
+        <section id="habilidades">
+            <h2 class="section-title">Minhas Habilidades</h2>
+            
+            <div class="skills-container">
+                <div class="skill-card">
+                    <span class="skill-icon">🌐</span>
+                    <span class="skill-name">HTML5</span>
+                </div>
+                
+                <div class="skill-card">
+                    <span class="skill-icon">🎨</span>
+                    <span class="skill-name">CSS3</span>
+                </div>
+                
+                <div class="skill-card">
+                    <span class="skill-icon">⚡</span>
+                    <span class="skill-name">JavaScript</span>
+                </div>
+                
+                <div class="skill-card">
+                    <span class="skill-icon">🐘</span>
+                    <span class="skill-name">PHP</span>
+                </div>
+                
+                <div class="skill-card">
+                    <span class="skill-icon">🗄️</span>
+                    <span class="skill-name">MySQL</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- SEÇÃO PROJETOS -->
+        <section id="projetos">
+            <h2 class="section-title">Meus Projetos</h2>
+            
+            <div class="projects-container">
+                <!-- PROJETO 1 -->
+                <article class="project-card">
+                    <img src="https://placehold.co/330x180/e2e8f0/1e293b?text=Projeto+1" alt="Capa do projeto" class="project-img">
+                    <div class="project-body">
+                        <h3 class="project-title">[INSIRA O NOME DO SEU PROJETO AQUI]</h3>
+                        <p class="project-desc">[DESCREVA O PROJETO AQUI - Exemplo: Um site institucional para um cliente local utilizando HTML e CSS responsivo.]</p>
+                        <a href="#" class="btn-primary" target="_blank">Ver Projeto</a>
+                    </div>
+                </article>
+
+                <!-- PROJETO 2 -->
+                <article class="project-card">
+                    <img src="https://placehold.co/330x180/e2e8f0/1e293b?text=Projeto+2" alt="Capa do projeto" class="project-img">
+                    <div class="project-body">
+                        <h3 class="project-title">[INSIRA O NOME DO SEU PROJETO AQUI]</h3>
+                        <p class="project-desc">[DESCREVA O PROJETO AQUI - Exemplo: Uma calculadora interativa para ambiente web construída em JavaScript Puro.]</p>
+                        <a href="#" class="btn-primary" target="_blank">Ver Projeto</a>
+                    </div>
+                </article>
+
+                <!-- PROJETO 3 -->
+                <article class="project-card">
+                    <img src="https://placehold.co/330x180/e2e8f0/1e293b?text=Projeto+3" alt="Capa do projeto" class="project-img">
+                    <div class="project-body">
+                        <h3 class="project-title">[INSIRA O NOME DO SEU PROJETO AQUI]</h3>
+                        <p class="project-desc">[DESCREVA O PROJETO AQUI - Exemplo: Sistema CRUD de cadastro de clientes que será integrado com PHP e banco MySQL.]</p>
+                        <a href="#" class="btn-primary" target="_blank">Ver Projeto</a>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <!-- 
+          SEÇÃO CONTATO COM FORMULÁRIO (PREPARAÇÃO BACK-END PHP / MYSQL)
+          
+          ======================================================================
+          AULA SOBRE FORMULÁRIO + PHP + XAMPP:
+          ======================================================================
+          1. method="POST": Envia os dados no corpo da requisição HTTP (de forma
+             segura e sem exibi-los na URL do navegador).
+             
+          2. action="processa_contato.php": Indica qual script PHP no servidor 
+             XAMPP vai receber e processar as informações enviadas.
+             
+          3. Atributos 'name' (name="nome", name="email", name="mensagem"): 
+             SÃO FUNDAMENTAIS! No PHP, você acessará o valor digitado através da 
+             superglobal $_POST['nome'], $_POST['email'] e $_POST['mensagem'].
+             
+          4. Como testar no XAMPP futuramente:
+             - Mova esta pasta do seu projeto para "C:/xampp/htdocs/meu-portfolio/"
+             - Ligue os serviços Apache e MySQL no Painel do XAMPP.
+             - Crie o arquivo "processa_contato.php" na mesma pasta.
+             - Acesse pelo navegador: http://localhost/meu-portfolio/
+        -->
+        <section id="contato">
+            <h2 class="section-title">Entre em Contato</h2>
+            
+            <form id="contact-form" action="processa_contato.php" method="POST" class="contact-form">
+                <div class="form-group">
+                    <label for="nome">Nome Completo:</label>
+                    <!-- O atributo 'required' faz uma validação nativa simples do HTML -->
+                    <input type="text" id="nome" name="nome" placeholder="Digite seu nome..." required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">E-mail:</label>
+                    <input type="email" id="email" name="email" placeholder="seuemail@exemplo.com" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="mensagem">Mensagem:</label>
+                    <textarea id="mensagem" name="mensagem" rows="5" placeholder="Escreva sua mensagem aqui..." required></textarea>
+                </div>
+
+                <button type="submit" class="btn-primary" style="width: 100%;">Enviar Mensagem</button>
+
+                <!-- Div de feedback gerenciada via JS -->
+                <div id="form-feedback" class="form-feedback"></div>
+            </form>
+        </section>
+    </main>
+
+    <!-- RODAPÉ DA PÁGINA -->
+    <footer>
+        <p>&copy; <span id="year"></span> - Portfólio de [ADICIONE SEU NOME AQUI]. Criado para fins didáticos.</p>
+    </footer>
+
+    <!--
+      ==========================================================================
+      JAVASCRIPT PURO (Vanilla JS)
+      ==========================================================================
+      O JS é a linguagem que traz interatividade para a página.
+      Ele permite manipular os elementos HTML (DOM), reagir a eventos do usuário
+      e criar regras dinâmicas.
+    -->
+    <script>
+        /*
+          1. ATUALIZAÇÃO AUTOMÁTICA DO ANO NO RODAPÉ
+          Gera o ano atual dinamicamente para não precisar atualizar o código todo ano.
+        */
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        /*
+          2. MANIPULAÇÃO DO TEMA (DARK MODE)
+          Aprendendo a capturar botões e alternar classes na tag <body>.
+        */
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const bodyElement = document.body;
+
+        themeToggleBtn.addEventListener('click', function () {
+            // toggle(): Adiciona a classe se ela não existir, ou remove se já existir.
+            bodyElement.classList.toggle('dark-mode');
+
+            // Atualiza o texto do botão para informar o estado atual
+            if (bodyElement.classList.contains('dark-mode')) {
+                themeToggleBtn.textContent = 'Modo Claro';
+            } else {
+                themeToggleBtn.textContent = 'Modo Escuro';
+            }
+        });
+
+        /*
+          3. INTERCEPTAÇÃO E VALIDAÇÃO DO FORMULÁRIO (Pré-envio PHP)
+          Aprendendo a escutar o evento 'submit' de formulários.
+        */
+        const contactForm = document.getElementById('contact-form');
+        const formFeedback = document.getElementById('form-feedback');
+
+        contactForm.addEventListener('submit', function (event) {
+            /* 
+               ATENÇÃO ALUNO:
+               O método event.preventDefault() impede o formulário de recarregar a página
+               e enviar imediatamente para o PHP. 
+               
+               Utilizamos isso aqui apenas para fins DIDÁTICOS de simulação de envio no Front-End!
+               Quando seu script 'processa_contato.php' estiver pronto no XAMPP, você pode
+               remover esta simulação para permitir que os dados cheguem até o PHP.
+            */
+            event.preventDefault();
+
+            // Obter os valores digitados pelos campos
+            const nome = document.getElementById('nome').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const mensagem = document.getElementById('mensagem').value.trim();
+
+            // Validação simples em JS
+            if (nome === '' || email === '' || mensagem === '') {
+                alert('Por favor, preencha todos os campos antes de enviar.');
+                return;
+            }
+
+            // Exibe mensagem de sucesso didática na tela
+            formFeedback.className = 'form-feedback success';
+            formFeedback.style.display = 'block';
+            formFeedback.innerHTML = `Obrigado, <strong>${nome}</strong>! Sua mensagem foi simulada com sucesso.<br><small>(Ao integrar com PHP no XAMPP, estes dados serão gravados no MySQL).</small>`;
+
+            // Limpa o formulário após o envio
+            contactForm.reset();
+        });
+    </script>
+</body>
+</html>
